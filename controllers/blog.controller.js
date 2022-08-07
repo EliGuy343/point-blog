@@ -1,4 +1,6 @@
+import mongoose from 'mongoose';
 import Blog from '../models/Blog.js';
+import User from '../models/User.js';
 
 // TODO: Add paginiation of some sort
 export const getAllBlogs = async (req, res) => {
@@ -37,14 +39,20 @@ export const getBlog = async (req, res) => {
 
 export const addBlog = async (req, res) => {
   const {title, description, image} = req.body;
-  const blog = new Blog({
-    title,
-    description,
-    image,
-    userId: req.user.id
-  });
   try {
-    await blog.save();
+    const existingUser = await User.findById(req.user.id);
+    const blog = new Blog({
+      title,
+      description,
+      image,
+      user: req.user.id
+    });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    await blog.save({session});
+    existingUser.blogs.push(blog);
+    await existingUser.save({session});
+    await session.commitTransaction();
     return res.status(200).json({blog});
   } 
   catch (err) {
@@ -62,7 +70,7 @@ export const updateBlog = async (req, res) => {
   let blog;
   try {
     blog = await Blog.findById(blogId);
-    if(blog.userId !== req.user.id) {
+    if(blog.user.toString() !== req.user.id) {
       return res.status(401).json({
         msg:'you are not allowed to edit this blog'
       });
@@ -83,7 +91,7 @@ export const deleteBlog = async (req, res) => {
   let blog;
   try {
     blog = await Blog.findById(blogId);
-    if(blog.userId !== req.user.id) {
+    if(blog.user.toString() !== req.user.id) {
       return res.status(401).json({
         msg:'you are not allowed to delete this blog'
       });
