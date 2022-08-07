@@ -37,6 +37,22 @@ export const getBlog = async (req, res) => {
   }
 }
 
+export const getBlogsByUser = async (req, res) => {
+  const userId = req.params.id;
+  let userBlogs;
+  try {
+    userBlogs = await User.findById(userId).populate('blogs');
+    if(!userBlogs) {
+      return res.status(404).json({msg:'no blogs found for this user'});
+    }
+    return res.status(200).json({blogs:userBlogs.blogs});
+  } 	
+  catch (err) {
+    console.log(err);
+    return res.status(500).json({msg:'something went wrong'});
+  }
+}
+
 export const addBlog = async (req, res) => {
   const {title, description, image} = req.body;
   try {
@@ -101,6 +117,7 @@ export const deleteBlog = async (req, res) => {
     }
     blog = await Blog.findByIdAndRemove(blogId).populate('user');
     await blog.user.blogs.pull(blog);
+    await blog.user.save();
     return res.status(200).json({msg:'blog successfully deleted'});
   } 
   catch (err) {
