@@ -91,12 +91,16 @@ export const deleteBlog = async (req, res) => {
   let blog;
   try {
     blog = await Blog.findById(blogId);
+    if(!blog) {
+      return res.status(400).json({msg:'Blog doesn\'t exist'});
+    }
     if(blog.user.toString() !== req.user.id) {
       return res.status(401).json({
         msg:'you are not allowed to delete this blog'
       });
     }
-    await Blog.findByIdAndDelete(blogId);
+    blog = await Blog.findByIdAndRemove(blogId).populate('user');
+    await blog.user.blogs.pull(blog);
     return res.status(200).json({msg:'blog successfully deleted'});
   } 
   catch (err) {
