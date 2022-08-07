@@ -31,7 +31,7 @@ export const signupUser = async (req, res) => {
   try {
     existingUser = await User.findOne({email});
     if(existingUser) {
-      return res.status(400).json({message:'email already in use'});
+      return res.status(400).json({msg:'Email already in use'});
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
