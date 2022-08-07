@@ -1,5 +1,6 @@
 import Blog from '../models/Blog.js';
 
+// TODO: Add paginiation of some sort
 export const getAllBlogs = async (req, res) => {
   let blogs;
   try {
@@ -8,6 +9,23 @@ export const getAllBlogs = async (req, res) => {
       return res.status(404).json({msg:'no blogs found'});
     }
     return res.status(200).json({blogs});
+  }
+  catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      msg:'Something went wrong, trying again later'
+    });
+  }
+}
+
+export const getBlog = async (req, res) => {
+  let blog;
+  try {
+    blog = await Blog.findById(req.params.id);
+    if(!blog) {
+      return res.status(404).json({msg:'no blog found'});
+    }
+    return res.status(200).json({blog});
   }
   catch (err) {
     console.log(err);
@@ -60,19 +78,21 @@ export const updateBlog = async (req, res) => {
   } 
 }
 
-export const getBlog = async (req, res) => {
+export const deleteBlog = async (req, res) => {
+  const blogId = req.params.id;
   let blog;
   try {
-    blog = await Blog.findById(req.params.id);
-    if(!blog) {
-      return res.status(404).json({msg:'no blog found'});
+    blog = await Blog.findById(blogId);
+    if(blog.userId !== req.user.id) {
+      return res.status(401).json({
+        msg:'you are not allowed to delete this blog'
+      });
     }
-    return res.status(200).json({blog});
-  }
+    await Blog.findByIdAndDelete(blogId);
+    return res.status(200).json({msg:'blog successfully deleted'});
+  } 
   catch (err) {
     console.log(err);
-    return res.status(500).json({
-      msg:'Something went wrong, trying again later'
-    });
-  }
+    res.status(500).json({msg:'something went wrong'});
+  } 
 }
