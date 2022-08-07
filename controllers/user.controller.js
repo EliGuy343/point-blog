@@ -62,10 +62,15 @@ export const login = async (req, res) => {
     }
     const payload = {
       email: existingUser.email,
-      name: existingUser.name
+      name: existingUser.name,
+      id: existingUser._id
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn:'2d'});
-    return res.status(200).json({token});
+    return res.status(200).json({
+      email:existingUser.email,
+      name: existingUser.name,
+      token: token
+    });
   } 
   catch (error) {
     

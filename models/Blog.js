@@ -15,10 +15,10 @@ const blogSchema = new Schema({
     type: String,
     required: true
   },
-  user: {
+  userId: {
     type: String,
-    required: true
-  }
+    ref: 'User'
+  },
 });
 
 export default mongoose.model('Blog', blogSchema);
