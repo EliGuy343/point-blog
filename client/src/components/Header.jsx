@@ -1,4 +1,4 @@
-import {styled} from '@mui/material';
+import {styled, Tab, Tabs} from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,6 +15,8 @@ import { useState } from 'react';
 
 const Header = () => {
   const [anchorMenu, setAnchorMenu] = useState(false);
+  const [tab, setTab] = useState(undefined);
+
   const handleOpenUserMenu = (event) => {
     setAnchorMenu(event.currentTarget);
   };
@@ -26,9 +27,10 @@ const Header = () => {
 
   return (
     <AppBar
-     sx={{
-      background:'linear-gradient(90deg, rgba(77, 76, 76, 1) 2%, rgba(166, 165, 164, 1) 36%, rgba(77, 76, 76, 1) 100%)',
-     }}
+      position='sticky'
+      sx={{
+       backgroundColor:'#65cfb6'
+      }}
     >
       <Container maxWidth='x1'>
         <Toolbar disableGutters sx={{justifyContent:'space-between'}}>
@@ -61,6 +63,24 @@ const Header = () => {
             >
               POINT BLOG
             </Typography>
+            <Tabs 
+              value={tab}
+              onChange={(e, val)=>setTab(val)}
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: 'white', 
+                  height: '2px',
+                  color:'white'
+                }
+              }}
+              sx={{ 
+                display:{ xs:'none', md:'flex'},
+                "& button.Mui-selected":{color:'white'}
+              }}
+            >
+              <TabStyled label='all blogs'/>
+              <TabStyled label='my blogs'/>
+            </Tabs>
           </Box>
           <Box
           sx={{
@@ -112,6 +132,12 @@ const Header = () => {
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center">Register</Typography>
               </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Blogs</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">My blogs</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
@@ -130,5 +156,10 @@ const ButtonStyled = styled(Button)`
   &:hover {
     background-color: #a19d9d;
   }
+`;
+
+const TabStyled = styled(Tab)`
+  color: white;
+  font-weight: 600;
 `;
 export default Header;
