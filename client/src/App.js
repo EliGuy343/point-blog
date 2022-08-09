@@ -4,7 +4,9 @@ import AddBlog from './components/AddBlog';
 import BlogDetail from './components/BlogDetail';
 import Blogs from './components/Blogs';
 import Header from './components/Header';
+import Home from './components/Home';
 import Login from './components/Login';
+import Register from './components/Register';
 import UserBlogs from './components/UserBlogs';
 
 function App() {
@@ -12,7 +14,9 @@ function App() {
     <div className="App">
       <Header/>
       <Routes>
+        <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
         <Route path='/blogs' element={<Blogs/>}/>
         <Route path='/myblogs' element={<UserBlogs/>}/>
         <Route path='/blogs/:id' element={<BlogDetail/>} />

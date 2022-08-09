@@ -12,10 +12,11 @@ import MenuItem from '@mui/material/MenuItem';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [anchorMenu, setAnchorMenu] = useState(false);
-  const [tab, setTab] = useState(undefined);
+  const [tab, setTab] = useState(false);
 
   const handleOpenUserMenu = (event) => {
     setAnchorMenu(event.currentTarget);
@@ -24,6 +25,9 @@ const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorMenu(null);
   };
+  const onButtonClick = () => {
+    setTab(false);
+  }
 
   return (
     <AppBar
@@ -66,6 +70,7 @@ const Header = () => {
             <Tabs 
               value={tab}
               onChange={(e, val)=>setTab(val)}
+              textColor='inherit'
               TabIndicatorProps={{
                 style: {
                   backgroundColor: 'white', 
@@ -78,8 +83,8 @@ const Header = () => {
                 "& button.Mui-selected":{color:'white'}
               }}
             >
-              <TabStyled label='all blogs'/>
-              <TabStyled label='my blogs'/>
+              <TabStyled LinkComponent={Link} to='/blogs' label='all blogs'/>
+              <TabStyled LinkComponent={Link} to='/myblogs' label='my blogs'/>
             </Tabs>
           </Box>
           <Box
@@ -88,10 +93,18 @@ const Header = () => {
             display:{ xs:'none', md:'flex'}
             }}
         >
-          <ButtonStyled>
+          <ButtonStyled
+            LinkComponent={Link}
+            to='/login'
+            onClick={onButtonClick}
+          >
             Login
           </ButtonStyled>
-          <ButtonStyled>
+          <ButtonStyled
+            LinkComponent={Link}
+            to='/register'
+            onClick={onButtonClick}
+          >
             Register
           </ButtonStyled>
         </Box>
@@ -126,17 +139,27 @@ const Header = () => {
               open={Boolean(anchorMenu)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">Login</Typography>
+              <MenuItem 
+                onClick={handleCloseUserMenu}
+              >
+                <LinkStyled to='/login' style={{ textDecoration: 'none' }}>
+                  <Typography textAlign="center">Login</Typography>
+                </LinkStyled>
               </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
+              <LinkStyled to='/register' style={{ textDecoration: 'none' }}>
                 <Typography textAlign="center">Register</Typography>
+              </LinkStyled>
               </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">Blogs</Typography>
+              <LinkStyled to='/blogs' style={{ textDecoration: 'none' }}>
+                <Typography textAlign="center">All Blogs</Typography>
+              </LinkStyled>
               </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">My blogs</Typography>
+              <LinkStyled to='/myblogs' style={{ textDecoration: 'none' }}>
+                <Typography textAlign="center">My Blogs</Typography>
+              </LinkStyled>
               </MenuItem>
             </Menu>
           </Box>
@@ -161,5 +184,14 @@ const ButtonStyled = styled(Button)`
 const TabStyled = styled(Tab)`
   color: white;
   font-weight: 600;
+`;
+
+const LinkStyled = styled(Link)`
+    text-decoration: none;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 export default Header;
