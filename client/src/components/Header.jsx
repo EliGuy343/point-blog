@@ -114,6 +114,11 @@ const Header = () => {
            </ButtonStyled>
           </>
           }
+          {user.isLoggedIn && 
+            <ButtonStyled>
+              Logout
+           </ButtonStyled>
+          }
           </Box>
           <Box 
             sx={{ 
@@ -172,6 +177,11 @@ const Header = () => {
                   <LinkStyled to='/myblogs' style={{ textDecoration: 'none' }}>
                     <Typography textAlign="center">My Blogs</Typography>
                   </LinkStyled>
+                </MenuItem>
+              }
+              {user.isLoggedIn &&
+                <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               }
             </Menu>
