@@ -13,10 +13,12 @@ import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [anchorMenu, setAnchorMenu] = useState(false);
   const [tab, setTab] = useState(false);
+  const user = useSelector((state)=>state.user);
 
   const handleOpenUserMenu = (event) => {
     setAnchorMenu(event.currentTarget);
@@ -67,61 +69,66 @@ const Header = () => {
             >
               POINT BLOG
             </Typography>
-            <Tabs 
-              value={tab}
-              onChange={(e, val)=>setTab(val)}
-              textColor='inherit'
-              TabIndicatorProps={{
-                style: {
-                  backgroundColor: 'white', 
-                  height: '2px',
-                  color:'white'
-                }
-              }}
-              sx={{ 
-                display:{ xs:'none', md:'flex'},
-                "& button.Mui-selected":{color:'white'}
-              }}
-            >
-              <TabStyled LinkComponent={Link} to='/blogs' label='all blogs'/>
-              <TabStyled LinkComponent={Link} to='/myblogs' label='my blogs'/>
-            </Tabs>
+            {user.isLoggedIn && 
+              <Tabs 
+                value={tab}
+                onChange={(e, val)=>setTab(val)}
+                textColor='inherit'
+                TabIndicatorProps={{
+                  style: {
+                    backgroundColor: 'white', 
+                    height: '2px',
+                    color:'white'
+                  }
+                }}
+                sx={{ 
+                  display:{ xs:'none', md:'flex'},
+                  "& button.Mui-selected":{color:'white'}
+                }}
+              >
+                <TabStyled LinkComponent={Link} to='/blogs' label='all blogs'/>
+                <TabStyled LinkComponent={Link} to='/myblogs' label='my blogs'/>
+              </Tabs>
+            }
           </Box>
           <Box
-          sx={{
-            justifySelf:'flex-end',
-            display:{ xs:'none', md:'flex'}
-            }}
-        >
-          <ButtonStyled
-            LinkComponent={Link}
-            to='/login'
-            onClick={onButtonClick}
+            sx={{
+              justifySelf:'flex-end',
+              display:{ xs:'none', md:'flex'}
+              }}
           >
-            Login
-          </ButtonStyled>
-          <ButtonStyled
-            LinkComponent={Link}
-            to='/register'
-            onClick={onButtonClick}
-          >
+          {!user.isLoggedIn && <>
+            <ButtonStyled
+              LinkComponent={Link}
+              to='/login'
+              onClick={onButtonClick}
+            >
+              Login
+           </ButtonStyled>
+           <ButtonStyled
+              LinkComponent={Link}
+              to='/register'
+              onClick={onButtonClick}
+           >
             Register
-          </ButtonStyled>
-        </Box>
-        <Box 
-          sx={{ 
-              flexGrow: 0,
-              display:{ xs:'flex', md:'none'}
-            }}
-        >
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <MenuIcon
-                sx={{
-                  color:'white'
-                }}
-              />
-            </IconButton>
+           </ButtonStyled>
+          </>
+          }
+          </Box>
+          <Box 
+            sx={{ 
+                flexGrow: 0,
+                display:{ xs:'flex', md:'none'}
+              }}
+          >
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <MenuIcon
+                  sx={{
+                    color:'white'
+                  }}
+                />
+              </IconButton>
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
@@ -139,28 +146,34 @@ const Header = () => {
               open={Boolean(anchorMenu)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem 
-                onClick={handleCloseUserMenu}
-              >
-                <LinkStyled to='/login' style={{ textDecoration: 'none' }}>
-                  <Typography textAlign="center">Login</Typography>
-                </LinkStyled>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-              <LinkStyled to='/register' style={{ textDecoration: 'none' }}>
-                <Typography textAlign="center">Register</Typography>
-              </LinkStyled>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-              <LinkStyled to='/blogs' style={{ textDecoration: 'none' }}>
-                <Typography textAlign="center">All Blogs</Typography>
-              </LinkStyled>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-              <LinkStyled to='/myblogs' style={{ textDecoration: 'none' }}>
-                <Typography textAlign="center">My Blogs</Typography>
-              </LinkStyled>
-              </MenuItem>
+              {!user.isLoggedIn && 
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <LinkStyled to='/login' style={{ textDecoration: 'none' }}>
+                    <Typography textAlign="center">Login</Typography>
+                  </LinkStyled>
+                </MenuItem>
+              }
+              {!user.isLoggedIn &&
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <LinkStyled to='/register' style={{ textDecoration: 'none' }}>
+                    <Typography textAlign="center">Register</Typography>
+                  </LinkStyled>
+                </MenuItem>
+              }
+              {user.isLoggedIn &&
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <LinkStyled to='/blogs' style={{ textDecoration: 'none' }}>
+                    <Typography textAlign="center">All Blogs</Typography>
+                  </LinkStyled>
+                </MenuItem>
+              }
+              {user.isLoggedIn &&
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <LinkStyled to='/myblogs' style={{ textDecoration: 'none' }}>
+                    <Typography textAlign="center">My Blogs</Typography>
+                  </LinkStyled>
+                </MenuItem>
+              }
             </Menu>
           </Box>
         </Toolbar>
