@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import {useState} from 'react';
+import { registerApi } from '../api/apiCalls';
 
 const Register = () => {
   const [registerInput, setRegisterInput] = useState({
@@ -24,8 +25,9 @@ const Register = () => {
   }
 
   const onFormSubmit = (e) =>{
-    e.preventdefault();
-    console.log(registerInput);
+    e.preventDefault();
+    const {name, email, password} = registerInput;
+    registerApi({name, email, password});
   }
 
   return (
@@ -77,7 +79,7 @@ const Register = () => {
             name='confirmPassword'
             onChange={onChangeInput}
           />
-          <ButtonStyled variant='contained' sx={{borderRadius: 3}}>
+          <ButtonStyled variant='contained' type='submit' sx={{borderRadius: 3}}>
             Submit
           </ButtonStyled>
         </Box>
