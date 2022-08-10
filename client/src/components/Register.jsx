@@ -43,7 +43,7 @@ const Register = () => {
           marginTop={2}
           borderRadius={5}
         >
-          <TypographyStyled TypographyStyled padding={3}>
+          <TypographyStyled padding={3}>
             Register
           </TypographyStyled>
           <TextField

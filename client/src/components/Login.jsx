@@ -26,7 +26,6 @@ const Login = () => {
 
   const onFormSubmit = (e) =>{
     e.preventDefault();
-    console.log('test');
     loginApi(dispatch, loginInput);
   }
 

@@ -13,22 +13,27 @@ import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { logoutUser } from '../store';
 
 const Header = () => {
   const [anchorMenu, setAnchorMenu] = useState(false);
   const [tab, setTab] = useState(false);
   const user = useSelector((state)=>state.user);
+  const dispatch = useDispatch();
 
   const handleOpenUserMenu = (event) => {
     setAnchorMenu(event.currentTarget);
   };
-  
   const handleCloseUserMenu = () => {
     setAnchorMenu(null);
   };
   const onButtonClick = () => {
     setTab(false);
+  };
+  const onLogoutClick = () => {
+    dispatch(logoutUser());
+    setAnchorMenu(null);
   }
 
   return (
@@ -115,7 +120,7 @@ const Header = () => {
           </>
           }
           {user.isLoggedIn && 
-            <ButtonStyled>
+            <ButtonStyled onClick={onLogoutClick}>
               Logout
            </ButtonStyled>
           }
@@ -152,25 +157,25 @@ const Header = () => {
               onClose={handleCloseUserMenu}
             >
               {!user.isLoggedIn && 
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <LinkStyled to='/login' style={{ textDecoration: 'none' }}>
+                <LinkStyled to='/login' style={{ textDecoration: 'none' }}>
+                  <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">Login</Typography>
-                  </LinkStyled>
-                </MenuItem>
+                  </MenuItem>
+                </LinkStyled>
               }
               {!user.isLoggedIn &&
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <LinkStyled to='/register' style={{ textDecoration: 'none' }}>
+                <LinkStyled to='/register' style={{ textDecoration: 'none' }}>
+                  <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">Register</Typography>
-                  </LinkStyled>
-                </MenuItem>
+                  </MenuItem>
+                </LinkStyled>
               }
               {user.isLoggedIn &&
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <LinkStyled to='/blogs' style={{ textDecoration: 'none' }}>
+                <LinkStyled to='/blogs' style={{ textDecoration: 'none' }}>
+                  <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">All Blogs</Typography>
-                  </LinkStyled>
-                </MenuItem>
+                  </MenuItem>
+                </LinkStyled>
               }
               {user.isLoggedIn &&
                 <MenuItem onClick={handleCloseUserMenu}>
@@ -180,7 +185,7 @@ const Header = () => {
                 </MenuItem>
               }
               {user.isLoggedIn &&
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={onLogoutClick}>
                     <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               }
