@@ -6,28 +6,65 @@ import {
   styled
 } from '@mui/material';
 import React from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginApi } from '../api/apiCalls';
 
 const Login = () => {
+  const [loginInput, setLoginInput] = useState({
+    email: '',
+    password: ''
+  });
+  const dispatch = useDispatch();
+
+  const onChangeInput = (e) => {
+    setLoginInput(prevState =>({
+      ...prevState,
+      [e.target.name]:e.target.value
+    }));
+  }
+
+  const onFormSubmit = (e) =>{
+    e.preventDefault();
+    console.log('test');
+    loginApi(dispatch, loginInput);
+  }
+
   return (
     <div>
-      <form>
+      <form onSubmit={onFormSubmit}>
         <Box
           maxWidth={400}
           display='flex'
           flexDirection={'column'}
           alignItems='center'
           boxShadow='10px 10px 20px #ccc'
+          width={'75%'}
           padding={3}
           margin='auto'
           marginTop={5}
           borderRadius={5}
         >
-          <TypographyStyled TypographyStyled padding={3}>
+          <TypographyStyled padding={3}>
             Login
           </TypographyStyled>
-          <TextField placeholder='Email' type='email' margin='normal'/>
-          <TextField placeholder='Password' type='password' margin='normal'/>
-          <ButtonStyled variant='contained' sx={{borderRadius: 3}}>
+          <TextField
+            placeholder='Email'
+            name='email'
+            type='email'
+            margin='normal'
+            value={loginInput.email}
+            onChange={onChangeInput}
+          />
+          <TextField
+            placeholder='Password'
+            name='password'
+            type='password'
+            margin='normal'
+            value={loginInput.password}
+            onChange={onChangeInput}
+          />
+          <ButtonStyled variant='contained' type='submit' sx={{borderRadius: 3}}>
             Submit
           </ButtonStyled>
         </Box>

@@ -9,13 +9,14 @@ const userSlice = createSlice({
     email: '',
   },
   reducers: {
-    login(state, payload) {
+    loginUser(state, action) {
+      console.log(action.payload);
       state.isLoggedIn = true;
-      state.token = payload.token;
-      state.name = payload.name;
-      state.email = payload.email;
+      state.token = action.payload.token;
+      state.name = action.payload.name;
+      state.email = action.payload.email;
     },
-    logout(state) {
+    logoutUser(state) {
       state.isLoggedIn = false;
       state.token = null;
       state.name = '';
@@ -24,7 +25,7 @@ const userSlice = createSlice({
   }
 });
 
-export const userActions = userSlice.actions;
+export const {loginUser, logoutUser} = userSlice.actions;
 
 export const store = configureStore({
   reducer: {
