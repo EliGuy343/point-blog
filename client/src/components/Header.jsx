@@ -35,6 +35,7 @@ const Header = () => {
   const onLogoutClick = () => {
     dispatch(logoutUser());
     setAnchorMenu(null);
+    localStorage.removeItem('token');
     navigate('/login');
   }
 

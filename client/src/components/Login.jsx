@@ -6,8 +6,8 @@ import {
   styled
 } from '@mui/material';
 import React from 'react';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginApi } from '../api/apiCalls';
 
@@ -17,7 +17,14 @@ const Login = () => {
     password: ''
   });
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state=>state.user.isLoggedIn);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isLoggedIn) {
+      navigate('/blogs');
+    }
+  }, [isLoggedIn]);
 
   const onChangeInput = (e) => {
     setLoginInput(prevState =>({

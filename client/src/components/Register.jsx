@@ -6,9 +6,10 @@ import {
   styled
 } from '@mui/material';
 import React from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { registerApi } from '../api/apiCalls';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Register = () => {
   const [registerInput, setRegisterInput] = useState({
@@ -18,6 +19,14 @@ const Register = () => {
     confirmPassword: ''
   });
   const navigate = useNavigate();
+  const isLoggedIn = useSelector(state=>state.user.isLoggedIn);
+
+  useEffect(() => {
+    if(isLoggedIn) {
+      navigate('/blogs');
+    }
+  }, [isLoggedIn]);
+
   const onChangeInput = (e) => {
     setRegisterInput(prevState =>({
       ...prevState,
