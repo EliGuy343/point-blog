@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import {useState} from 'react';
 import { registerApi } from '../api/apiCalls';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [registerInput, setRegisterInput] = useState({
@@ -16,7 +17,7 @@ const Register = () => {
     password: '',
     confirmPassword: ''
   });
-
+  const navigate = useNavigate();
   const onChangeInput = (e) => {
     setRegisterInput(prevState =>({
       ...prevState,
@@ -28,6 +29,7 @@ const Register = () => {
     e.preventDefault();
     const {name, email, password} = registerInput;
     registerApi({name, email, password});
+    navigate('/login');
   }
 
   return (

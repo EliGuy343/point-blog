@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { loginApi } from '../api/apiCalls';
 
 const Login = () => {
@@ -16,6 +17,7 @@ const Login = () => {
     password: ''
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onChangeInput = (e) => {
     setLoginInput(prevState =>({
@@ -27,6 +29,7 @@ const Login = () => {
   const onFormSubmit = (e) =>{
     e.preventDefault();
     loginApi(dispatch, loginInput);
+    navigate('/blogs');
   }
 
   return (

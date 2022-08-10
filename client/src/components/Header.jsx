@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { logoutUser } from '../store';
 
@@ -21,6 +21,7 @@ const Header = () => {
   const [tab, setTab] = useState(false);
   const user = useSelector((state)=>state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorMenu(event.currentTarget);
@@ -34,6 +35,7 @@ const Header = () => {
   const onLogoutClick = () => {
     dispatch(logoutUser());
     setAnchorMenu(null);
+    navigate('/login');
   }
 
   return (
