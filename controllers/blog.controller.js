@@ -5,12 +5,26 @@ import User from '../models/User.js';
 // TODO: Add paginiation of some sort
 export const getAllBlogs = async (req, res) => {
   let blogs;
+  let pageNumber = parseInt(req.query.pageNumber || 0);
+  const result = {};
+  let startIndex = pageNumber * 5;
+  const endIndex = (pageNumber+1) * 5;
   try {
-    blogs = await Blog.find();
+
+    if(endIndex > (await Blog.countDocuments().exec())) 
+      result.end = true;
+    else 
+      result.end = false;
+    
+    blogs = await Blog.find()
+      .skip(startIndex)
+      .limit(5)
+      .exec();
     if(!blogs) {
       return res.status(404).json({msg:'no blogs found'});
     }
-    return res.status(200).json({blogs});
+    result.blogs = blogs;
+    return res.status(200).json({result});
   }
   catch (err) {
     console.log(err);
@@ -61,7 +75,8 @@ export const addBlog = async (req, res) => {
       title,
       description,
       image,
-      user: req.user.id
+      user: req.user.id,
+      username: req.user.name
     });
     const session = await mongoose.startSession();
     session.startTransaction();

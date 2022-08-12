@@ -1,40 +1,42 @@
 import {
-  Avatar,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   CardMedia,
-  Collapse,
-  IconButton, 
   Typography
 } from '@mui/material';
 import React from 'react';
 
-const Blog = () => {
+const Blog = ({title, description, imageUrl, username}) => {
+  const name = 'Ivan Ivanov';
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      
+    <Card sx={{
+      width:{
+        xs:'80%',
+        sm:'80%',
+        md:'40%'
+      },
+      margin: 'auto',
+      mt: 2,
+      padding: 2,
+      boxShadow: '10px 10px 20px #ccc',
+      '&:hover':{
+        boxShadow: '10px 10px 20px #aaa',
+      }
+    }}>
       <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor:'red' }} aria-label="recipe">
-            R
-          </Avatar>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={title}
+        subheader={`written by ${username}`}
       />
-      <CardMedia
+      {imageUrl && <CardMedia
         component="img"
         height="194"
-        image="/static/images/cards/paella.jpg"
-        alt="Paella dish"
-      />
+        image={imageUrl}
+        alt=""
+      />}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along
-          with the mussels, if you like.
+          {description}
         </Typography>
       </CardContent>
   </Card>

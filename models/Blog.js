@@ -19,6 +19,11 @@ const blogSchema = new Schema({
     type: mongoose.Types.ObjectId,
     ref:'User',
     required:true
+  },
+  username: {
+    type: String,
+    ref:'User',
+    required: true
   }
 });
 
