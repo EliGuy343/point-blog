@@ -54,12 +54,26 @@ export const getBlog = async (req, res) => {
 export const getBlogsByUser = async (req, res) => {
   const userId = req.params.id;
   let userBlogs;
+  let pageNumber = parseInt(req.query.page || 0);
+  const result = {};
+  let startIndex = pageNumber * 5;
+  const endIndex = (pageNumber+1) * 5;
   try {
-    userBlogs = await User.findById(userId).populate('blogs');
+    if(endIndex > (await Blog.countDocuments().exec())) 
+      result.end = true;
+    else 
+      result.end = false;
+
+    userBlogs = await Blog.find({user: userId})
+      .skip(startIndex)
+      .limit(5)
+      .exec();
+    result.userBlogs = userBlogs;
+    
     if(!userBlogs) {
       return res.status(404).json({msg:'no blogs found for this user'});
     }
-    return res.status(200).json({blogs:userBlogs.blogs});
+    return res.status(200).json({result});
   } 	
   catch (err) {
     console.log(err);
