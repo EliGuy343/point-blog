@@ -34,3 +34,14 @@ export const registerApi = async (register) => {
     console.log(err);
   }
 }
+
+export const getBlogsApi = async () => {
+  try {
+    const res = await axios.get('/api/blog');
+    return res.data;
+  } 
+  catch (err) {
+    console.log(err);
+  }
+  
+}
