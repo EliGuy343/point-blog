@@ -5,7 +5,7 @@ import User from '../models/User.js';
 // TODO: Add paginiation of some sort
 export const getAllBlogs = async (req, res) => {
   let blogs;
-  let pageNumber = parseInt(req.query.pageNumber || 0);
+  let pageNumber = parseInt(req.query.page || 0);
   const result = {};
   let startIndex = pageNumber * 5;
   const endIndex = (pageNumber+1) * 5;

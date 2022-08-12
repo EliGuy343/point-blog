@@ -35,11 +35,11 @@ export const registerApi = async (register) => {
   }
 }
 
-export const getBlogsApi = async () => {
+export const getBlogsApi = async (page) => {
   try {
-    const res = await axios.get('/api/blog');
+    const res = await axios.get(`/api/blog?page=${page}`);
     return res.data;
-  } 
+  }
   catch (err) {
     console.log(err);
   }
