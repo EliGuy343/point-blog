@@ -1,8 +1,24 @@
-import {Box, InputLabel, TextField, Typography } from '@mui/material'
-import { fontWeight, textAlign } from '@mui/system'
-import React from 'react'
+import {
+  Box,
+  InputLabel,
+  TextField,
+  Typography,
+  Button,
+  styled
+} from '@mui/material'
+import React, {useState} from 'react'
+import { useSelector } from 'react-redux';
+import { addBlogApi } from '../api/apiCalls';
+import { useNavigate } from 'react-router-dom';
 
 const AddBlog = () => {
+  const user = useSelector(state=> state.user);
+  const navigate = useNavigate();
+  const [blog, setBlog] = useState({
+    title:'',
+    description:'',
+    image:'' 
+  }); 
   const InputLabelStyle = {
     mb:1,
     mt:2,
@@ -14,9 +30,17 @@ const AddBlog = () => {
     fontWeight:'600',
     textAlign:'center'
   };
-
+  const onChangeBlog = (e) => {
+    setBlog(prevState => ({...prevState, [e.target.name]:e.target.value}))
+  }
+  const onSubmitForm = (e) => {
+    e.preventDefault();
+    const res = addBlogApi(user.token, blog);
+    console.log(res);
+    navigate('/blogs')
+  }
   return (
-    <form>
+    <form onSubmit={onSubmitForm}>
       <Box
         border={3}
         borderColor='#65cfb6'
@@ -56,7 +80,13 @@ const AddBlog = () => {
         >
           Title
         </InputLabel>
-        <TextField/>
+        <TextField 
+          name='title'
+          value={blog.title}
+          margin={'auto'}
+          variant='outlined'
+          onChange={onChangeBlog}
+        />
         <InputLabel
            sx={{
             mb:1,
@@ -72,7 +102,15 @@ const AddBlog = () => {
         >
           Content
         </InputLabel>
-        <TextField multiline rows={3}/>
+        <TextField
+          name='description'
+          multiline
+          rows={3}
+          value={blog.description}
+          margin={'auto'}
+          variant='outlined'
+          onChange={onChangeBlog}
+        />
         <InputLabel
            sx={{
             mb:1,
@@ -88,10 +126,32 @@ const AddBlog = () => {
         >
           Image URL
         </InputLabel>
-        <TextField/>
+        <TextField
+          name='image'
+          value={blog.image}
+          margin={'auto'}
+          variant='outlined'
+          onChange={onChangeBlog}
+        />
+        <ButtonStyled type="submit">
+          Save
+        </ButtonStyled>
       </Box>
     </form>
   )
 }
 
+const ButtonStyled = styled(Button)`
+  padding: 5px;
+  border-radius: 5px;
+  width: 25%;
+  margin: auto;
+  margin-top: 10px;
+  font-size: 18px;
+  color: white;
+  background-color: #65cfb6;
+  &:hover {
+    background-color: #5ccaa6;
+  }
+`;
 export default AddBlog

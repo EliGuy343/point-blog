@@ -100,6 +100,7 @@ export const addBlog = async (req, res) => {
     return res.status(200).json({blog});
   } 
   catch (err) {
+    console.log(err);
     return res.status(500).json({msg:'Something went wrong'});
   }
 }

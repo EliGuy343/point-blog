@@ -57,3 +57,20 @@ export const getBlogsByUserApi = async (id,page) => {
   }
   
 }
+
+export const addBlogApi = async (token, blog) => {
+  try {
+    const res = await axios.post(`/api/blog`,
+      blog,
+      {
+        headers:{
+          token:'bearer '+token
+        }
+      }
+    )
+    console.log(res);
+    return res.data; 
+  } catch (err) {
+    console.log(err);
+  }
+}
