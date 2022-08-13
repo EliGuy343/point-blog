@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import Blog from '../models/Blog.js';
 import User from '../models/User.js';
 
-// TODO: Add paginiation of some sort
 export const getAllBlogs = async (req, res) => {
   let blogs;
   let pageNumber = parseInt(req.query.page || 0);

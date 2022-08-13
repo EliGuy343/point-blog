@@ -95,7 +95,7 @@ const Header = () => {
                 }}
               >
                 <TabStyled LinkComponent={Link} to='/blogs' label='all blogs'/>
-                <TabStyled LinkComponent={Link} to='/myblogs' label='my blogs'/>
+                <TabStyled LinkComponent={Link} to={`/blogs/${user.id}`} label='my blogs'/>
               </Tabs>
             }
           </Box>
@@ -182,7 +182,7 @@ const Header = () => {
               }
               {user.isLoggedIn &&
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <LinkStyled to='/myblogs' style={{ textDecoration: 'none' }}>
+                  <LinkStyled to={`/blogs/${user.id}`} style={{ textDecoration: 'none' }}>
                     <Typography textAlign="center">My Blogs</Typography>
                   </LinkStyled>
                 </MenuItem>
