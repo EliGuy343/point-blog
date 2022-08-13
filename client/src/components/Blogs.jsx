@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios';
 import { getBlogsApi } from '../api/apiCalls';
 import Blog from './Blog';
 import { Box, Button, styled } from '@mui/material';

@@ -30,12 +30,64 @@ const UserBlogs = () => {
   }
   useEffect(() => {
     getblogs();
-  },[page]);
+  },[page,id]);
 
 
   return (
-    <div>UserBlogs</div>
+    <div>
+    {blogs && blogs.map(blog => (
+      <Blog
+        key={blog._id}
+        title={blog.title}
+        description={blog.description}
+        username={blog.username}
+        imageUrl={blog.image}
+      />
+    ))}
+    <Box
+      display='flex'
+      flexDirection={'column'}
+      alignItems='center'
+    >
+      <Box
+        display='flex'
+        flexDirection={'row'}
+        alignItems='center'
+      >
+        <ButtonStyled 
+          variant='contained'
+          type='submit'
+          sx={{borderRadius: 3}}
+          disabled={end || loading}
+          onClick={increasePage}
+        >
+          load next
+        </ButtonStyled>
+        <ButtonStyled 
+          variant='contained'
+          type='submit'
+          sx={{borderRadius: 3}}
+          disabled={page < 1}
+          onClick={decreasePage}
+        >
+          load previous
+        </ButtonStyled>
+      </Box>
+    </Box>
+  </div>
   )
 }
+
+const ButtonStyled = styled(Button)`
+  padding: 5px;
+  border-radius: 5px;
+  margin: 10px;
+  font-size: 12px;
+  color: white;
+  background-color: #65cfb6;
+  &:hover {
+    background-color: #5ccaa6;
+  }
+`;
 
 export default UserBlogs
