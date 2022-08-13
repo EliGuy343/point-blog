@@ -7,7 +7,7 @@ const Authenticator = () => {
   const user = useSelector(state=> state.user);
 
   useEffect(() => {
-    if(localStorage.token && !user.isLoggedIn) {
+    if(localStorage.token && !user.token) {
       authApi(dispatch, localStorage.token);
     }
     //eslint-disable-next-line 

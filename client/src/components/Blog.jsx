@@ -8,7 +8,6 @@ import {
 import React from 'react';
 
 const Blog = ({title, description, imageUrl, username}) => {
-  const name = 'Ivan Ivanov';
   return (
     <Card sx={{
       width:{

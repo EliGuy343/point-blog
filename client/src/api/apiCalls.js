@@ -1,4 +1,4 @@
-import {loginUser} from '../store/index';
+import {loginUser, authUser} from '../store/index';
 import axios from 'axios';
 
 export const loginApi = async (dispatch, user) => {
@@ -18,7 +18,7 @@ export const authApi = async (dispatch, token) => {
       headers:{
         token:"bearer "+token
       }});
-    dispatch(loginUser(res.data));
+    dispatch(authUser(res.data));
   }
   catch (err) {
     console.log(err);  
@@ -38,6 +38,18 @@ export const registerApi = async (register) => {
 export const getBlogsApi = async (page) => {
   try {
     const res = await axios.get(`/api/blog?page=${page}`);
+    return res.data;
+  }
+  catch (err) {
+    console.log(err);
+  }
+  
+}
+
+export const getBlogsByUserApi = async (id,page) => {
+  try {
+    console.log(id);
+    const res = await axios.get(`/api/blog/user/${id}?page=${page}`);
     return res.data;
   }
   catch (err) {

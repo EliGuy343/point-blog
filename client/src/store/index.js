@@ -7,14 +7,22 @@ const userSlice = createSlice({
     token: null,
     name: '',
     email: '',
+    id:''
   },
   reducers: {
     loginUser(state, action) {
-      console.log(action.payload);
       state.isLoggedIn = true;
       state.token = action.payload.token;
       state.name = action.payload.name;
       state.email = action.payload.email;
+      state.id = action.payload.id;
+    },
+    authUser(state, action) {
+      state.isLoggedIn = true;
+      state.token = localStorage.getItem('token');
+      state.name = action.payload.user.name;
+      state.email = action.payload.user.email;
+      state.id = action.payload.user._id;
     },
     logoutUser(state) {
       state.isLoggedIn = false;
@@ -25,7 +33,7 @@ const userSlice = createSlice({
   }
 });
 
-export const {loginUser, logoutUser} = userSlice.actions;
+export const {loginUser, authUser, logoutUser} = userSlice.actions;
 
 export const store = configureStore({
   reducer: {
