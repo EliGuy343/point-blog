@@ -96,6 +96,7 @@ const Header = () => {
               >
                 <TabStyled LinkComponent={Link} to='/blogs' label='all blogs'/>
                 <TabStyled LinkComponent={Link} to={`/blogs/${user.id}`} label='my blogs'/>
+                <TabStyled LinkComponent={Link} to={`/blogs/add`} label='create blog'/>
               </Tabs>
             }
           </Box>
