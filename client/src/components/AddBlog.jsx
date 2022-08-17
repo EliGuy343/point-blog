@@ -33,10 +33,9 @@ const AddBlog = () => {
   const onChangeBlog = (e) => {
     setBlog(prevState => ({...prevState, [e.target.name]:e.target.value}))
   }
-  const onSubmitForm = (e) => {
+  const onSubmitForm = async (e) => {
     e.preventDefault();
-    const res = addBlogApi(user.token, blog);
-    console.log(res);
+    const res = await addBlogApi(user.token, blog);
     navigate('/blogs')
   }
   return (
