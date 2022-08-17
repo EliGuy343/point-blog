@@ -48,8 +48,18 @@ export const getBlogsApi = async (page) => {
 
 export const getBlogsByUserApi = async (id,page) => {
   try {
-    console.log(id);
     const res = await axios.get(`/api/blog/user/${id}?page=${page}`);
+    return res.data;
+  }
+  catch (err) {
+    console.log(err);
+  }
+  
+}
+
+export const getBlogByIdApi = async (id) => {
+  try {
+    const res = await axios.get(`/api/blog/${id}`);
     return res.data;
   }
   catch (err) {
