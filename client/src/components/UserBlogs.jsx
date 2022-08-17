@@ -10,7 +10,6 @@ const UserBlogs = () => {
   const [reload, setReload] = useState(false);
   const {id} = useParams();
   const [blogs, setblogs] = useState([]);
-  console.log(blogs);
   const [end, setEnd] = useState(true);
   const [page, setPage] = useState(0);
   const [loading, setloading] = useState(false);
@@ -20,7 +19,6 @@ const UserBlogs = () => {
     const res = await getBlogsByUserApi(id, page);
     setblogs(res.result.userBlogs);
     setEnd(res.result.end);
-    console.log(res.result);
     setloading(false);
   }
   const increasePage = () => {
@@ -30,7 +28,6 @@ const UserBlogs = () => {
     setPage(prevPage => (prevPage - 1));
   }
   useEffect(() => {
-    console.log('test');
     getblogs();
   },[page,id, reload]);
 

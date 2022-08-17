@@ -8,14 +8,12 @@ const Blogs = () => {
   const [end, setEnd] = useState(true);
   const [page, setPage] = useState(0);
   const [loading, setloading] = useState(false);
-  console.log(blogs);
 
   const getblogs = async () => {
     setloading(true);
     const res = await getBlogsApi(page);
     setblogs(res.result.blogs);
     setEnd(res.result.end);
-    console.log(res.result);
     setloading(false);
   }
   const increasePage = () => {
