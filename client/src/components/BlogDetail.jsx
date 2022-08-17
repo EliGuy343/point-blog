@@ -7,8 +7,9 @@ import {
   Button
 } from '@mui/material';
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
-import { getBlogByIdApi } from '../api/apiCalls';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom'
+import { editBlogApi, getBlogByIdApi } from '../api/apiCalls';
 
 const BlogDetail = () => {
   const InputLabelStyle = {
@@ -25,6 +26,8 @@ const BlogDetail = () => {
 
   const [blog, setBlog] = useState();
   const [editBlog, setEditBlog] = useState();
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const id = useParams().id;
   const fetchDetails = async () => {
     const res = await getBlogByIdApi(id);
@@ -36,7 +39,8 @@ const BlogDetail = () => {
   }
   const onSubmitForm = (e) => {
     e.preventDefault();
-    console.log(editBlog)
+    const res = editBlogApi(user.token, blog._id, editBlog);
+    navigate(`/blogs/${user.id}`);
   }
   useEffect(()=> {
     fetchDetails();

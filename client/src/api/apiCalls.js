@@ -78,9 +78,26 @@ export const addBlogApi = async (token, blog) => {
         }
       }
     )
-    console.log(res);
     return res.data; 
   } catch (err) {
     console.log(err);
   }
 }
+
+export const editBlogApi = async (token, id, blog) => {
+  try {
+    const res = await axios.put(`/api/blog/edit/${id}`,
+      blog,
+      {
+        headers:{
+          token:'bearer '+token
+        }
+      }
+    )
+    return res.data; 
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
