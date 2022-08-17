@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 const UserBlogs = () => {
   const user = useSelector(state => state.user);
+  const [reload, setReload] = useState(false);
   const {id} = useParams();
   const [blogs, setblogs] = useState([]);
   console.log(blogs);
@@ -29,14 +30,16 @@ const UserBlogs = () => {
     setPage(prevPage => (prevPage - 1));
   }
   useEffect(() => {
+    console.log('test');
     getblogs();
-  },[page,id]);
+  },[page,id, reload]);
 
 
   return (
     <div>
     {blogs && blogs.map(blog => (
       <Blog
+        setReload={setReload}
         id={blog._id}
         isUser={user.id === blog.user}
         key={blog._id}

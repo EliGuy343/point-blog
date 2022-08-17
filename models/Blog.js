@@ -12,8 +12,7 @@ const blogSchema = new Schema({
     required: true
   },
   image: {
-    type: String,
-    required: true
+    type: String
   },
   user: {
     type: mongoose.Types.ObjectId,

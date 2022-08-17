@@ -5,23 +5,62 @@ import {
   CardHeader,
   CardMedia,
   IconButton,
-  Typography
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
 } from '@mui/material';
-import React from 'react';
+import React, {useState} from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { deleteBlogApi } from '../api/apiCalls';
 
 
-const Blog = ({title, description, imageUrl, username, isUser, id}) => {
+const Blog = ({title, description, imageUrl, username, isUser, id, setReload}) => {
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const user = useSelector((state)=> state.user);
   const handleEdit = () => {
     navigate(`/blogs/edit/${id}`);
   }
-  const handleDelete = () => {
-
+  const handleOpenDelete = () => {
+    setOpen(true);
   }
-  return (
+  const handleDelete = () => {
+    deleteBlogApi(user.token, id);
+    setOpen(false);
+    setReload(reload=> !reload);
+  }
+  const handleClose = () => {
+    setOpen(false);
+  }
+  return (<>
+     <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Delete Post?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Deleting your post cannot be undone, all info will be lost.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleDelete} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+    </Dialog>
     <Card sx={{
       width:{
         xs:'80%',
@@ -41,7 +80,7 @@ const Blog = ({title, description, imageUrl, username, isUser, id}) => {
           <IconButton onClick={handleEdit}>
             <EditIcon/>
           </IconButton>
-          <IconButton onClick={handleDelete}>
+          <IconButton onClick={handleOpenDelete}>
             <DeleteIcon/>
           </IconButton>
         </Box>
@@ -62,6 +101,7 @@ const Blog = ({title, description, imageUrl, username, isUser, id}) => {
         </Typography>
       </CardContent>
   </Card>
+  </>
   )
 }
 

@@ -99,5 +99,19 @@ export const editBlogApi = async (token, id, blog) => {
     console.log(err);
   }
 }
+export const deleteBlogApi = async (token, id) => {
+  try {
+    const res = await axios.delete(`/api/blog/delete/${id}`,
+      {
+        headers:{
+          token:'bearer '+token
+        }
+      }
+    )
+    return res.data; 
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 
