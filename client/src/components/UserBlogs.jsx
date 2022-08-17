@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios';
 import { getBlogsByUserApi } from '../api/apiCalls';
 import Blog from './Blog';
 import { Box, Button, styled } from '@mui/material';
@@ -10,6 +9,7 @@ const UserBlogs = () => {
   const user = useSelector(state => state.user);
   const {id} = useParams();
   const [blogs, setblogs] = useState([]);
+  console.log(blogs);
   const [end, setEnd] = useState(true);
   const [page, setPage] = useState(0);
   const [loading, setloading] = useState(false);
@@ -37,6 +37,8 @@ const UserBlogs = () => {
     <div>
     {blogs && blogs.map(blog => (
       <Blog
+        id={blog._id}
+        isUser={user.id === blog.user}
         key={blog._id}
         title={blog.title}
         description={blog.description}

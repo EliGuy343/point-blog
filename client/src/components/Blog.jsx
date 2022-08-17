@@ -1,13 +1,26 @@
 import {
+  Box,
   Card,
   CardContent,
   CardHeader,
   CardMedia,
+  IconButton,
   Typography
 } from '@mui/material';
 import React from 'react';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
 
-const Blog = ({title, description, imageUrl, username}) => {
+
+const Blog = ({title, description, imageUrl, username, isUser, id}) => {
+  const navigate = useNavigate();
+  const handleEdit = () => {
+    navigate(`/blogs/edit/${id}`);
+  }
+  const handleDelete = () => {
+
+  }
   return (
     <Card sx={{
       width:{
@@ -23,6 +36,16 @@ const Blog = ({title, description, imageUrl, username}) => {
         boxShadow: '10px 10px 20px #aaa',
       }
     }}>
+      {isUser && <>
+        <Box display='flex'>
+          <IconButton onClick={handleEdit}>
+            <EditIcon/>
+          </IconButton>
+          <IconButton onClick={handleDelete}>
+            <DeleteIcon/>
+          </IconButton>
+        </Box>
+      </>}
       <CardHeader
         title={title}
         subheader={`written by ${username}`}
