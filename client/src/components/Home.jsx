@@ -1,8 +1,11 @@
 import { Box, Button, styled, Typography } from '@mui/material'
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
+  const user = useSelector(state => state.user);
   return (
     <div>
       <Box
@@ -38,16 +41,17 @@ const Home = () => {
             }}>
               Share Your Thoughts
             </Typography>
-            <ButtonStyled>
-              explore blogs
-            </ButtonStyled>
-            <ButtonStyled
-              sx={{
-                backgroundColor:'#888'
-              }}
-            >
-              Register
-            </ButtonStyled>
+            <LinkStyled to='/blogs'>
+              <ButtonStyled>
+                explore blogs
+              </ButtonStyled>
+            </LinkStyled>
+            {!user.isLoggedIn && <LinkStyled to='/register'>
+              <RegisterButton>
+                Register
+              </RegisterButton>
+            </LinkStyled>
+            }
         </Box>
     </div>
   )
@@ -65,6 +69,27 @@ const ButtonStyled = styled(Button)`
   &:hover {
     background-color: #5ccaa6;
   }
+`;
+const RegisterButton = styled(Button)`
+  padding: 5px;
+  border-radius: 5px;
+  width: 55%;
+  margin: auto;
+  margin-top: 10px;
+  font-size: 18px;
+  color: white;
+  background-color: #555;
+  &:hover {
+    background-color: #333;
+  }
+`;
+const LinkStyled = styled(Link)`
+    text-decoration: none;
+    width:100%;
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 
 export default Home
