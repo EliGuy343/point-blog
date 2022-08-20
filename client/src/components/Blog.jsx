@@ -11,7 +11,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
+  styled
 } from '@mui/material';
 import React, {useState} from 'react';
 import EditIcon from '@mui/icons-material/Edit';
@@ -21,7 +22,7 @@ import { useSelector } from 'react-redux';
 import { deleteBlogApi } from '../api/apiCalls';
 
 
-const Blog = ({title, description, imageUrl, username, isUser, id, setReload}) => {
+const Blog = ({title, description, imageUrl, username, isUser, id, setReload, userId}) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const user = useSelector((state)=> state.user);
@@ -38,6 +39,9 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload}) =
   }
   const handleClose = () => {
     setOpen(false);
+  }
+  const onMoreClick = () => {
+    navigate(`/blogs/${userId}`);
   }
   return (<>
      <Dialog
@@ -99,10 +103,29 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload}) =
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
+      {userId &&
+      <ButtonStyled onClick={onMoreClick}>
+        More By {username}
+      </ButtonStyled>
+      }
       </CardContent>
   </Card>
   </>
   )
 }
+
+const ButtonStyled = styled(Button)`
+  padding: 2px;
+  border-radius: 5px;
+  margin: auto;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #538a7d;
+  text-transform: none;
+  background-color: white;
+  &:hover {
+    background-color: #eee;
+  }
+`;
 
 export default Blog;
