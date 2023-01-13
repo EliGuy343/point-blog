@@ -23,7 +23,8 @@ const blogSchema = new Schema({
     type: String,
     ref:'User',
     required: true
-  }
+  },
+  comments:[{type: mongoose.Types.ObjectId, ref:'Comment', required:true}]
 });
 
 export default mongoose.model('Blog', blogSchema);
