@@ -17,8 +17,8 @@ const AddBlog = () => {
   const [blog, setBlog] = useState({
     title:'',
     description:'',
-    image:'' 
-  }); 
+    image:''
+  });
   const InputLabelStyle = {
     mb:1,
     mt:2,
@@ -79,7 +79,7 @@ const AddBlog = () => {
         >
           Title
         </InputLabel>
-        <TextField 
+        <TextField
           name='title'
           value={blog.title}
           margin={'auto'}

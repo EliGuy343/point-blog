@@ -21,7 +21,7 @@ export const authApi = async (dispatch, token) => {
     dispatch(authUser(res.data));
   }
   catch (err) {
-    console.log(err);  
+    console.log(err);
   }
 }
 
@@ -43,7 +43,6 @@ export const getBlogsApi = async (page) => {
   catch (err) {
     console.log(err);
   }
-  
 }
 
 export const getBlogsByUserApi = async (id,page) => {
@@ -54,7 +53,6 @@ export const getBlogsByUserApi = async (id,page) => {
   catch (err) {
     console.log(err);
   }
-  
 }
 
 export const getBlogByIdApi = async (id) => {
@@ -65,7 +63,6 @@ export const getBlogByIdApi = async (id) => {
   catch (err) {
     console.log(err);
   }
-  
 }
 
 export const addBlogApi = async (token, blog) => {
@@ -78,7 +75,7 @@ export const addBlogApi = async (token, blog) => {
         }
       }
     )
-    return res.data; 
+    return res.data;
   } catch (err) {
     console.log(err);
   }
@@ -94,7 +91,7 @@ export const editBlogApi = async (token, id, blog) => {
         }
       }
     )
-    return res.data; 
+    return res.data;
   } catch (err) {
     console.log(err);
   }
@@ -108,7 +105,7 @@ export const deleteBlogApi = async (token, id) => {
         }
       }
     )
-    return res.data; 
+    return res.data;
   } catch (err) {
     console.log(err);
   }
