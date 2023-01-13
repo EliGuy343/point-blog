@@ -17,6 +17,7 @@ import {
 import React, {useState} from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CommentIcon from '@mui/icons-material/Comment';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { deleteBlogApi } from '../api/apiCalls';
@@ -44,26 +45,26 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload, us
     navigate(`/blogs/${userId}`);
   }
   return (<>
-     <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Delete Post?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Deleting your post cannot be undone, all info will be lost.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDelete} autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {"Delete Post?"}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Deleting your post cannot be undone, all info will be lost.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleDelete} autoFocus>
+          Delete
+        </Button>
+      </DialogActions>
     </Dialog>
     <Card sx={{
       width:{
@@ -103,11 +104,18 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload, us
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
-      {userId &&
-      <ButtonStyled onClick={onMoreClick}>
-        More By {username}
-      </ButtonStyled>
-      }
+        {userId &&
+        <ButtonStyled onClick={onMoreClick}>
+          More By {username}
+        </ButtonStyled>
+        }
+        <Box display="flex" gap="5px" padding="2px" sx={{cursor:"pointer"}}>
+          <CommentIcon
+            sx={{
+              color:"#727272"
+            }}
+          />
+        </Box>
       </CardContent>
   </Card>
   </>
