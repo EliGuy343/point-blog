@@ -21,6 +21,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { deleteBlogApi } from '../api/apiCalls';
+import DeleteDialog from './DeleteDialog';
 
 
 const Blog = ({title, description, imageUrl, username, isUser, id, setReload, userId}) => {
@@ -45,27 +46,7 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload, us
     navigate(`/blogs/${userId}`);
   }
   return (<>
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">
-        {"Delete Post?"}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Deleting your post cannot be undone, all info will be lost.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDelete} autoFocus>
-          Delete
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <DeleteDialog handleClose={handleClose} handleDelete={handleDelete} open={open} />
     <Card sx={{
       width:{
         xs:'80%',
