@@ -17,31 +17,40 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { deleteBlogApi } from '../api/apiCalls';
 import DeleteDialog from './DeleteDialog';
+import Comment from './Comment';
+import CommentModal from './CommentModal';
 
 
 const Blog = ({title, description, imageUrl, username, isUser, id, setReload, userId}) => {
-  const [open, setOpen] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialogOpen] = useState(false);
+  const [openCommentModal, setOpenCommentModal] = useState(false);
+
   const navigate = useNavigate();
   const user = useSelector((state)=> state.user);
   const handleEdit = () => {
     navigate(`/blogs/edit/${id}`);
   }
   const handleOpenDelete = () => {
-    setOpen(true);
+    setOpenDeleteDialogOpen(true);
   }
   const handleDelete = () => {
     deleteBlogApi(user.token, id);
-    setOpen(false);
+    setOpenDeleteDialogOpen(false);
     setReload(reload=> !reload);
   }
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialogOpen(false);
+  }
+
+  const handleCloseCommentModal = () =>{
+    setOpenCommentModal(false)
   }
   const onMoreClick = () => {
     navigate(`/blogs/${userId}`);
   }
   return (<>
-    <DeleteDialog handleClose={handleClose} handleDelete={handleDelete} open={open} />
+    <DeleteDialog handleClose={handleCloseDeleteDialog} handleDelete={handleDelete} open={openDeleteDialog} />
+    <CommentModal handleClose={handleCloseCommentModal} open={openCommentModal}/>
     <Card sx={{
       width:{
         xs:'80%',
@@ -85,7 +94,15 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload, us
           More By {username}
         </ButtonStyled>
         }
-        <Box display="flex" gap="5px" padding="2px" sx={{cursor:"pointer"}}>
+        <Box
+          display="flex"
+          gap="5px"
+          padding="2px"
+          sx={{cursor:"pointer"}}
+          onClick={() => {
+            setOpenCommentModal(true);
+          }}
+        >
           <CommentIcon
             sx={{
               color:"#727272"
