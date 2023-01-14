@@ -1,4 +1,4 @@
-import { Box, Grid, Modal, Paper, Typography } from '@mui/material';
+import { Box, Button, Grid, Modal, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import Comment from "./Comment";
 
@@ -20,10 +20,31 @@ const CommentModal = ({open, handleClose}) => {
         sx={{
           overflow:"scroll",
           display:"flex",
-          flexDirection:"column"
+          flexDirection:"column",
+          height:"300px"
         }}
       >
         {comments.map((comment) => <Comment comment={comment}/>)}
+      </Box>
+      <Box
+        sx={{
+          display:"flex",
+          flexDirection:"column",
+          justifyContent:"center",
+          alignSelf:"center",
+          alignItems:"center",
+          padding:"5px",
+          width:"100%",
+          gap:"15px"
+        }}
+      >
+        <TextField
+          variant="outlined"
+          sx={{
+            width:"85%"
+          }}
+        />
+        <Button variant="contained">Comment</Button>
       </Box>
     </Box>
   </Modal>
