@@ -153,4 +153,4 @@ const ButtonStyled = styled(Button)`
     background-color: #5ccaa6;
   }
 `;
-export default AddBlog
+export default AddBlog;

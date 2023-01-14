@@ -50,7 +50,7 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload, us
   }
   return (<>
     <DeleteDialog handleClose={handleCloseDeleteDialog} handleDelete={handleDelete} open={openDeleteDialog} />
-    <CommentModal handleClose={handleCloseCommentModal} open={openCommentModal}/>
+    <CommentModal handleClose={handleCloseCommentModal} open={openCommentModal} blogId={id}/>
     <Card sx={{
       width:{
         xs:'80%',

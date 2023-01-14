@@ -74,7 +74,7 @@ export const addBlogApi = async (token, blog) => {
           token:'bearer '+token
         }
       }
-    )
+    );
     return res.data;
   } catch (err) {
     console.log(err);
@@ -90,7 +90,7 @@ export const editBlogApi = async (token, id, blog) => {
           token:'bearer '+token
         }
       }
-    )
+    );
     return res.data;
   } catch (err) {
     console.log(err);
@@ -104,11 +104,25 @@ export const deleteBlogApi = async (token, id) => {
           token:'bearer '+token
         }
       }
-    )
+    );
     return res.data;
   } catch (err) {
     console.log(err);
   }
 }
 
-
+export const addCommentApi = async (token, id, comment) => {
+  try {
+    const res = await axios.post(`/api/comments/${id}`,
+    comment,
+    {
+      headers:{
+        token:'bearer '+token
+      }
+    }
+  );
+  return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}

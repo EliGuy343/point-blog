@@ -28,25 +28,26 @@ export const getAllComments = async (req, res) => {
 }
 
 export const addComment = async (req, res) => {
-  const {content, blogId} = req.body;
+  const blogId = req.params.blogid;
+  const {content} = req.body;
   try {
     const blog = await Blog.findById(blogId);
     if(!blog)
-    return res.status(404).json({msg:"this blog doesn't exist"});
+      return res.status(404).json({msg:"this blog doesn't exist"});
 
     const comment = new Comment({
       content,
-      blog:blogId,
+      blog: blogId,
       user: req.user.id,
       username: req.user.name
     })
     const session = await mongoose.startSession();
     session.startTransaction();
     await comment.save({session});
-    blog.comments.push(blog);
+    blog.comments.push(comment);
     await blog.save({session});
     await session.commitTransaction();
-    return res.status(200).json({blog});
+    return res.status(200).json({comment});
 
   } catch (err) {
     console.log(err);

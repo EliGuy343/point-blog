@@ -1,13 +1,30 @@
 import { Box, Button, Grid, Modal, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Comment from "./Comment";
 
-const CommentModal = ({open, handleClose}) => {
+const CommentModal = ({open, handleClose, blogId}) => {
+
+  const user = useSelector(state => state.user);
+
   const [comments, setComments] = useState([
     {content:"test", username:"test user"},
     {content:"some other comment", username:"test user"},
     {content:"some different comment", username:"test user"},
   ]);
+  const [commentInput, setCommentInput ] = useState({
+    content:"",
+  });
+  console.log(commentInput);
+
+  const onChangeComment = (e) => {
+    setCommentInput(prevState => ({...prevState, [e.target.name]:e.target.value}))
+  }
+
+  const addComment = () => {
+
+  }
+
   return (
     <Modal
       open={open}
@@ -43,6 +60,9 @@ const CommentModal = ({open, handleClose}) => {
           sx={{
             width:"85%"
           }}
+          name="content"
+          value={commentInput.content}
+          onChange={onChangeComment}
         />
         <Button variant="contained">Comment</Button>
       </Box>
