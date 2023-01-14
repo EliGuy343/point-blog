@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Modal, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { addCommentApi } from '../api/apiCalls';
 import Comment from "./Comment";
 
 const CommentModal = ({open, handleClose, blogId}) => {
@@ -21,8 +22,18 @@ const CommentModal = ({open, handleClose, blogId}) => {
     setCommentInput(prevState => ({...prevState, [e.target.name]:e.target.value}))
   }
 
-  const addComment = () => {
-
+  const addComment = async () => {
+    try {
+      const res = await addCommentApi(user.token, blogId, commentInput);
+      console.log(res);
+      setComments((prevState) => [...prevState, res.comment]);
+      console.log(res);
+      setCommentInput({
+        content:"",
+      });
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -64,7 +75,9 @@ const CommentModal = ({open, handleClose, blogId}) => {
           value={commentInput.content}
           onChange={onChangeComment}
         />
-        <Button variant="contained">Comment</Button>
+        <Button variant="contained" onClick={addComment}>
+          Comment
+        </Button>
       </Box>
     </Box>
   </Modal>
