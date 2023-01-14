@@ -7,7 +7,7 @@ export const authUser = async (req, res) => {
     const user = await User
       .findOne({email: req.user.email})
       .select('-password');
-    res.json({user}); 
+    res.json({user});
   }
   catch (err) {
     console.log(err);
@@ -23,7 +23,7 @@ export const getAllUsers = async (req,res) =>{
   catch (err) {
     console.log(err);
   }
-} 
+}
 
 export const signupUser = async (req, res) => {
   const {name, email, password} = req.body;
@@ -42,7 +42,7 @@ export const signupUser = async (req, res) => {
     });
     await user.save();
     res.status(200).json({user});
-  } 
+  }
   catch (err) {
     console.log(err);
   }
@@ -73,8 +73,8 @@ export const login = async (req, res) => {
       id: existingUser._id,
       token: token
     });
-  } 
-  catch (error) {
-    
+  }
+  catch (err) {
+    console.log(err);
   }
 }
