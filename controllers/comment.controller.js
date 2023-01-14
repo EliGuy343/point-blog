@@ -5,23 +5,26 @@ import Comment from '../models/Comment.js';
 
 export const getAllComments = async (req, res) => {
   let comments;
-  const blogId = req.params.id;
+  const blogId = req.params.blogid;
   const result = {};
-  let commentAmount = parseInt(req.query.amount || 10);
+  let commentAmount = parseInt(req.query.amount || 3);
   try {
-    if(endIndex > (await Comment.countDocuments().exec()))
+    if(commentAmount > (await Comment.countDocuments().exec())) {
       result.end = true;
-    else
+    }
+    else {
       result.end = false;
+    }
 
     comments = await Comment.find({blog: blogId}).limit(commentAmount).exec()
     result.comments = comments;
     if(!comments) {
       return res.status(404).json({msg:'no comments found for this blog'});
     }
-    return res.status(200).json({result});
+
+    return res.status(200).json({...result});
   }
-  catch (error) {
+  catch (err) {
     console.log(err);
     return res.status(500).json({msg:'something went wrong'});
   }

@@ -126,3 +126,14 @@ export const addCommentApi = async (token, id, comment) => {
     console.log(err);
   }
 }
+
+export const getCommentsApi = async (blogId, limit) => {
+  try {
+    console.log(blogId)
+    const res = await axios.get(`/api/comments/${blogId}?amount=${limit}`);
+    return res.data;
+  }
+  catch (err) {
+    console.log(err);
+  }
+}

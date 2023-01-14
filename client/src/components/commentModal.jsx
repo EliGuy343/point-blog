@@ -1,7 +1,8 @@
 import { Box, Button, Grid, Modal, Paper, TextField, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { addCommentApi } from '../api/apiCalls';
+import { addCommentApi, getCommentsApi } from '../api/apiCalls';
 import Comment from "./Comment";
 
 const CommentModal = ({open, handleClose, blogId}) => {
@@ -13,27 +14,42 @@ const CommentModal = ({open, handleClose, blogId}) => {
     {content:"some other comment", username:"test user"},
     {content:"some different comment", username:"test user"},
   ]);
+  const [limit, setLimit] = useState(3);
+  const [end, setEnd] = useState(false);
   const [commentInput, setCommentInput ] = useState({
     content:"",
   });
-  console.log(commentInput);
+
+  useEffect(()=>{
+    getComments(blogId, limit);
+  },[limit]);
+
+  const getComments = async (blogId, limit) => {
+    console.log(blogId)
+    const res = await getCommentsApi(blogId, limit);
+    console.log(res.result)
+    setComments(res.comments);
+    setEnd(res.end);
+  }
 
   const onChangeComment = (e) => {
-    setCommentInput(prevState => ({...prevState, [e.target.name]:e.target.value}))
+    setCommentInput(prevState => ({...prevState, [e.target.name]:e.target.value}));
   }
 
   const addComment = async () => {
     try {
       const res = await addCommentApi(user.token, blogId, commentInput);
-      console.log(res);
       setComments((prevState) => [...prevState, res.comment]);
-      console.log(res);
       setCommentInput({
         content:"",
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
+  }
+
+  const IncreaseLimit = () =>{
+    setLimit(prevState => prevState+3);
   }
 
   return (
@@ -53,7 +69,12 @@ const CommentModal = ({open, handleClose, blogId}) => {
           gap:"25px"
         }}
       >
-        {comments.map((comment) => <Comment comment={comment}/>)}
+        {comments?.map((comment) => <Comment comment={comment}/>)}
+        {!end &&
+          <Button variant="contained" onClick={IncreaseLimit}>
+            Load more Comments
+          </Button>
+        }
       </Box>
       <Box
         sx={{

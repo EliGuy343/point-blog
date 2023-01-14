@@ -36,6 +36,7 @@ const Blogs = () => {
           username={blog.username}
           imageUrl={blog.image}
           userId={blog.user}
+          id={blog._id}
         />
       ))}
       <Box
