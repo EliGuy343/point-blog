@@ -49,7 +49,8 @@ const CommentModal = ({open, handleClose, blogId}) => {
           overflow:"scroll",
           display:"flex",
           flexDirection:"column",
-          height:"300px"
+          height:"300px",
+          gap:"25px"
         }}
       >
         {comments.map((comment) => <Comment comment={comment}/>)}

@@ -78,6 +78,10 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload, us
       <CardHeader
         title={title}
         subheader={`written by ${username}`}
+        titleTypographyProps={{
+          variant:'h3',
+          fontWeight:"bold"
+        }}
       />
       {imageUrl && <CardMedia
         component="img"
@@ -86,7 +90,13 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload, us
         alt=""
       />}
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          color="text.secondary"
+          sx={{
+            fontSize:"24px",
+            padding:"5px"
+          }}
+        >
           {description}
         </Typography>
         {userId &&
@@ -97,7 +107,7 @@ const Blog = ({title, description, imageUrl, username, isUser, id, setReload, us
         <Box
           display="flex"
           gap="5px"
-          padding="2px"
+          padding="10px"
           sx={{cursor:"pointer"}}
           onClick={() => {
             setOpenCommentModal(true);
