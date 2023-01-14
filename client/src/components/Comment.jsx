@@ -3,7 +3,9 @@ import React from 'react'
 
 const Comment = ({comment}) => {
   return (
-    <Box>
+    <Box
+      width="100%"
+    >
       <Paper
         style={{
           padding: "25px",

@@ -9,7 +9,7 @@ export const getAllComments = async (req, res) => {
   const result = {};
   let commentAmount = parseInt(req.query.amount || 3);
   try {
-    if(commentAmount > (await Comment.countDocuments().exec())) {
+    if(commentAmount > (await Comment.find({blog: blogId}).countDocuments().exec())) {
       result.end = true;
     }
     else {

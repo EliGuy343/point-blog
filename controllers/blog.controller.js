@@ -10,7 +10,7 @@ export const getAllBlogs = async (req, res) => {
   const endIndex = (pageNumber+1) * 5;
   try {
 
-    if(endIndex > (await Blog.countDocuments().exec())) 
+    if(endIndex > (await Blog.countDocuments().exec()))
       result.end = true;
     else 
       result.end = false;
@@ -58,9 +58,9 @@ export const getBlogsByUser = async (req, res) => {
   let startIndex = pageNumber * 5;
   const endIndex = (pageNumber+1) * 5;
   try {
-    if(endIndex > (await Blog.countDocuments().exec())) 
+    if(endIndex > (await Blogfind({user: userId}).countDocuments().exec()))
       result.end = true;
-    else 
+    else
       result.end = false;
 
     userBlogs = await Blog.find({user: userId})
@@ -68,12 +68,12 @@ export const getBlogsByUser = async (req, res) => {
       .limit(5)
       .exec();
     result.userBlogs = userBlogs;
-    
+
     if(!userBlogs) {
       return res.status(404).json({msg:'no blogs found for this user'});
     }
     return res.status(200).json({result});
-  } 	
+  }
   catch (err) {
     console.log(err);
     return res.status(500).json({msg:'something went wrong'});

@@ -66,17 +66,26 @@ const CommentModal = ({open, handleClose, blogId}) => {
           display:"flex",
           flexDirection:"column",
           height:"300px",
-          gap:"25px"
+          gap:"25px",
+          alignItems:"center"
         }}
       >
         {comments?.map((comment) => <Comment comment={comment}/>)}
         {!end &&
-          <Button variant="contained" onClick={IncreaseLimit}>
+          <Button
+            variant="contained"
+            onClick={IncreaseLimit}
+            sx={{
+              width:"45%",
+              margin:'7px',
+              padding:"5px"
+            }}
+          >
             Load more Comments
           </Button>
         }
       </Box>
-      <Box
+      {user.isLoggedIn && <Box
         sx={{
           display:"flex",
           flexDirection:"column",
@@ -100,7 +109,7 @@ const CommentModal = ({open, handleClose, blogId}) => {
         <Button variant="contained" onClick={addComment}>
           Comment
         </Button>
-      </Box>
+      </Box>}
     </Box>
   </Modal>
   )
