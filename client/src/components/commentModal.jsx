@@ -78,7 +78,8 @@ const CommentModal = ({open, handleClose, blogId}) => {
             sx={{
               width:"45%",
               margin:'7px',
-              padding:"5px"
+              padding:"5px",
+              marginBottom:"40px",
             }}
           >
             Load more Comments

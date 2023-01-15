@@ -10,10 +10,10 @@ const Authenticator = () => {
     if(localStorage.token && !user.token) {
       authApi(dispatch, localStorage.token);
     }
-    //eslint-disable-next-line 
+    //eslint-disable-next-line
   }, [])
   return (
-      <div>            
+      <div>
       </div>
   )
 }
