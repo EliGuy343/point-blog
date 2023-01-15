@@ -7,3 +7,4 @@ export const uploadImage = (req, res) => {
   const imageUrl = `${url}/file/${req.file.filename}`;
   return res.status(200).json(imageUrl);
 }
+

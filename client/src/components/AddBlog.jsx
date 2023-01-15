@@ -38,6 +38,8 @@ const AddBlog = () => {
     const res = await addBlogApi(user.token, blog);
     navigate('/blogs')
   }
+
+
   return (
     <form onSubmit={onSubmitForm}>
       <Box
@@ -106,28 +108,6 @@ const AddBlog = () => {
           multiline
           rows={3}
           value={blog.description}
-          margin={'auto'}
-          variant='outlined'
-          onChange={onChangeBlog}
-        />
-        <InputLabel
-           sx={{
-            mb:1,
-            mt:2,
-            fontSize:{
-              xs:'12px',
-              sm:'12px',
-              md:'18px'
-            },
-            fontWeight:'600',
-            textAlign:'center'
-          }}
-        >
-          Image URL
-        </InputLabel>
-        <TextField
-          name='image'
-          value={blog.image}
           margin={'auto'}
           variant='outlined'
           onChange={onChangeBlog}

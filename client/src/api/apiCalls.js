@@ -130,7 +130,6 @@ export const addCommentApi = async (token, id, comment) => {
 
 export const getCommentsApi = async (blogId, limit) => {
   try {
-    console.log(blogId)
     const res = await axios.get(`/api/comments/${blogId}?amount=${limit}`);
     return res.data;
   }
