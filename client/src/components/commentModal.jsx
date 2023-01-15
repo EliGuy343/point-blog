@@ -9,11 +9,7 @@ const CommentModal = ({open, handleClose, blogId}) => {
 
   const user = useSelector(state => state.user);
 
-  const [comments, setComments] = useState([
-    {content:"test", username:"test user"},
-    {content:"some other comment", username:"test user"},
-    {content:"some different comment", username:"test user"},
-  ]);
+  const [comments, setComments] = useState([]);
   const [limit, setLimit] = useState(3);
   const [end, setEnd] = useState(false);
   const [commentInput, setCommentInput ] = useState({
