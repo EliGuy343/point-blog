@@ -22,6 +22,7 @@ export const authApi = async (dispatch, token) => {
   }
   catch (err) {
     console.log(err);
+    localStorage.removeItem('token');
   }
 }
 

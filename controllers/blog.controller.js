@@ -12,9 +12,9 @@ export const getAllBlogs = async (req, res) => {
 
     if(endIndex > (await Blog.countDocuments().exec()))
       result.end = true;
-    else 
+    else
       result.end = false;
-    
+
     blogs = await Blog.find()
       .skip(startIndex)
       .limit(5)
@@ -58,7 +58,7 @@ export const getBlogsByUser = async (req, res) => {
   let startIndex = pageNumber * 5;
   const endIndex = (pageNumber+1) * 5;
   try {
-    if(endIndex > (await Blogfind({user: userId}).countDocuments().exec()))
+    if(endIndex > (await Blog.find({user: userId}).countDocuments().exec()))
       result.end = true;
     else
       result.end = false;
@@ -124,11 +124,11 @@ export const updateBlog = async (req, res) => {
       blogFields
     );
     return res.status(200).json({updatedBlog});
-  } 
+  }
   catch (err) {
     console.log(err);
     res.status(500).json({msg:'something went wrong'});
-  } 
+  }
 }
 
 export const deleteBlog = async (req, res) => {
@@ -148,9 +148,9 @@ export const deleteBlog = async (req, res) => {
     await blog.user.blogs.pull(blog);
     await blog.user.save();
     return res.status(200).json({msg:'blog successfully deleted'});
-  } 
+  }
   catch (err) {
     console.log(err);
     res.status(500).json({msg:'something went wrong'});
-  } 
+  }
 }
